@@ -15,8 +15,8 @@ export async function GET() {
     // Cache por 1 hora
     return NextResponse.json(stats, {
       headers: {
-        'Cache-Control': 'public, max-age=3600, stale-while-revalidate=1800'
-      }
+        "Cache-Control": "public, max-age=3600, stale-while-revalidate=1800",
+      },
     });
   } catch (error) {
     console.error("WakaTime API route error:", error);
