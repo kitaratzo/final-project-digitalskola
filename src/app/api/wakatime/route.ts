@@ -12,7 +12,12 @@ export async function GET() {
       );
     }
 
-    return NextResponse.json(stats);
+    // Cache por 1 hora
+    return NextResponse.json(stats, {
+      headers: {
+        'Cache-Control': 'public, max-age=3600, stale-while-revalidate=1800'
+      }
+    });
   } catch (error) {
     console.error("WakaTime API route error:", error);
     return NextResponse.json(
