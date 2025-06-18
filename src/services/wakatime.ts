@@ -46,34 +46,44 @@ export interface WakaTimeData {
 }
 
 export class WakaTimeService {
-  private static readonly BASE_URL = 'https://wakatime.com/api/v1';
+  private static readonly BASE_URL = "https://wakatime.com/api/v1";
 
   static async getUser(): Promise<WakaTimeUser | null> {
     try {
       const apiKey = process.env.WAKATIME_API_KEY;
-      console.log('WakaTime API Key:', apiKey ? `${apiKey.substring(0, 10)}...` : 'NOT FOUND');
-      
+      console.log(
+        "WakaTime API Key:",
+        apiKey ? `${apiKey.substring(0, 10)}...` : "NOT FOUND"
+      );
+
       const response = await fetch(`${this.BASE_URL}/users/current`, {
         headers: {
-          'Authorization': `Basic ${Buffer.from(apiKey || '').toString('base64')}`,
-          'Content-Type': 'application/json',
+          Authorization: `Basic ${Buffer.from(apiKey || "").toString(
+            "base64"
+          )}`,
+          "Content-Type": "application/json",
         },
-        cache: 'force-cache'
+        cache: "force-cache",
       });
 
-      console.log('WakaTime User API Response Status:', response.status);
-      
+      console.log("WakaTime User API Response Status:", response.status);
+
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('WakaTime User API error:', response.status, response.statusText, errorText);
+        console.error(
+          "WakaTime User API error:",
+          response.status,
+          response.statusText,
+          errorText
+        );
         return null;
       }
 
       const data: WakaTimeUserResponse = await response.json();
-      console.log('WakaTime User API Response:', data);
+      console.log("WakaTime User API Response:", data);
       return data.data;
     } catch (error) {
-      console.error('Error fetching WakaTime user:', error);
+      console.error("Error fetching WakaTime user:", error);
       return null;
     }
   }
@@ -81,12 +91,12 @@ export class WakaTimeService {
   static async getWakaTimeData(): Promise<WakaTimeData> {
     const [stats, user] = await Promise.all([
       this.getTotalTime(),
-      this.getUser()
+      this.getUser(),
     ]);
 
     return {
       stats,
-      user
+      user,
     };
   }
 
@@ -94,51 +104,59 @@ export class WakaTimeService {
     try {
       const apiKey = process.env.WAKATIME_API_KEY;
       if (!apiKey) {
-        console.error('WakaTime API key not found');
+        console.error("WakaTime API key not found");
         return null;
       }
 
-      console.log('WakaTime API Key:', `${apiKey.substring(0, 10)}...`);
-      
-      const response = await fetch(`${this.BASE_URL}/users/current/stats/all_time`, {
-        headers: {
-          'Authorization': `Basic ${Buffer.from(apiKey).toString('base64')}`,
-          'Content-Type': 'application/json',
-        },
-        cache: 'force-cache'
-      });
+      console.log("WakaTime API Key:", `${apiKey.substring(0, 10)}...`);
 
-      console.log('WakaTime API Response Status:', response.status);
-      
+      const response = await fetch(
+        `${this.BASE_URL}/users/current/stats/all_time`,
+        {
+          headers: {
+            Authorization: `Basic ${Buffer.from(apiKey).toString("base64")}`,
+            "Content-Type": "application/json",
+          },
+          cache: "force-cache",
+        }
+      );
+
+      console.log("WakaTime API Response Status:", response.status);
+
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('WakaTime API error:', response.status, response.statusText, errorText);
+        console.error(
+          "WakaTime API error:",
+          response.status,
+          response.statusText,
+          errorText
+        );
         return null;
       }
 
       const data: WakaTimeResponse = await response.json();
-      console.log('WakaTime API Response:', data);
-      
+      console.log("WakaTime API Response:", data);
+
       // Verificar se os dados estão disponíveis
       if (data.data && data.data.total_seconds !== undefined) {
         return data.data;
       }
-      
+
       // Se está com status pending_update, retornar dados indicando que está calculando
-      if (data.status === 'pending_update' && data.human_readable_range) {
-        console.log('WakaTime stats are still calculating...');
+      if (data.status === "pending_update" && data.human_readable_range) {
+        console.log("WakaTime stats are still calculating...");
         return {
           total_seconds: 0,
-          human_readable_total: 'Calculating...',
+          human_readable_total: "Calculating...",
           daily_average: 0,
-          human_readable_daily_average: 'Calculating...'
+          human_readable_daily_average: "Calculating...",
         };
       }
-      
-      console.log('WakaTime data not available yet');
+
+      console.log("WakaTime data not available yet");
       return null;
     } catch (error) {
-      console.error('Error fetching WakaTime stats:', error);
+      console.error("Error fetching WakaTime stats:", error);
       return null;
     }
   }

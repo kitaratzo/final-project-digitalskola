@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import GithubContributionsChart from "./GithubContributionsChart";
 import WakaTimeStats from "../WakaTimeStats";
+import GithubContributionsChart from "./GithubContributionsChart";
 
 const GithubActivity = () => {
   return (

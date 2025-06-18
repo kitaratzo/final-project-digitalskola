@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { RiTimeLine } from 'react-icons/ri';
+import { useEffect, useState } from "react";
+import { RiTimeLine } from "react-icons/ri";
 
 interface WakaTimeStats {
   total_seconds: number;
@@ -16,16 +16,16 @@ const WakaTimeStats = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('/api/wakatime');
-        
+        const response = await fetch("/api/wakatime");
+
         if (!response.ok) {
-          throw new Error('Failed to fetch stats');
+          throw new Error("Failed to fetch stats");
         }
-        
+
         const data = await response.json();
         setStats(data);
       } catch (error) {
-        console.error('Error fetching WakaTime stats:', error);
+        console.error("Error fetching WakaTime stats:", error);
         setError(true);
       } finally {
         setLoading(false);
