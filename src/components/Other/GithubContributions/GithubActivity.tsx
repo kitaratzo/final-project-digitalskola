@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import GithubContributionsChart from "./GithubContributionsChart";
+import WakaTimeStats from "../WakaTimeStats";
 
 const GithubActivity = () => {
   return (
@@ -71,6 +72,17 @@ const GithubActivity = () => {
                 loading="lazy"
               />
             </div>
+          </motion.div>
+
+          {/* WakaTime Coding Stats */}
+          <motion.div
+            className="mt-6 text-center"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            viewport={{ once: true }}
+          >
+            <WakaTimeStats />
           </motion.div>
 
           <div className="mt-6 text-center">
