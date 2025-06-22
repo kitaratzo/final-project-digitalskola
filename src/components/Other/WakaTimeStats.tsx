@@ -34,10 +34,25 @@ const WakaTimeStats = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Buscar tanto stats quanto user data
+        // Buscar tanto stats quanto user data sem cache
+        const timestamp = new Date().getTime();
         const [statsResponse, userResponse] = await Promise.all([
-          fetch("/api/wakatime"),
-          fetch("/api/wakatime-user"),
+          fetch(`/api/wakatime?_=${timestamp}`, {
+            headers: {
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              Pragma: "no-cache",
+              Expires: "0",
+            },
+            cache: "no-store",
+          }),
+          fetch(`/api/wakatime-user?_=${timestamp}`, {
+            headers: {
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              Pragma: "no-cache",
+              Expires: "0",
+            },
+            cache: "no-store",
+          }),
         ]);
 
         const stats = statsResponse.ok ? await statsResponse.json() : null;

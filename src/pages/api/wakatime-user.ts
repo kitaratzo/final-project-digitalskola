@@ -16,11 +16,10 @@ export default async function handler(
       return res.status(500).json({ error: "Failed to fetch WakaTime user" });
     }
 
-    // Cache por 1 hora
-    res.setHeader(
-      "Cache-Control",
-      "public, max-age=3600, stale-while-revalidate=1800"
-    );
+    // Sem cache - dados sempre atualizados
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
 
     return res.status(200).json(user);
   } catch (error) {

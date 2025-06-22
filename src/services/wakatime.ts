@@ -56,14 +56,17 @@ export class WakaTimeService {
         apiKey ? `${apiKey.substring(0, 10)}...` : "NOT FOUND"
       );
 
-      const response = await fetch(`${this.BASE_URL}/users/current`, {
+      const response = await fetch(`${this.BASE_URL}/users/current?timestamp=${Date.now()}`, {
         headers: {
           Authorization: `Basic ${Buffer.from(apiKey || "").toString(
             "base64"
           )}`,
           "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          "Pragma": "no-cache",
+          "Expires": "0",
         },
-        cache: "force-cache",
+        cache: "no-store",
       });
 
       console.log("WakaTime User API Response Status:", response.status);
@@ -111,13 +114,16 @@ export class WakaTimeService {
       console.log("WakaTime API Key:", `${apiKey.substring(0, 10)}...`);
 
       const response = await fetch(
-        `${this.BASE_URL}/users/current/stats/all_time`,
+        `${this.BASE_URL}/users/current/stats/all_time?timestamp=${Date.now()}`,
         {
           headers: {
             Authorization: `Basic ${Buffer.from(apiKey).toString("base64")}`,
             "Content-Type": "application/json",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
           },
-          cache: "force-cache",
+          cache: "no-store",
         }
       );
 

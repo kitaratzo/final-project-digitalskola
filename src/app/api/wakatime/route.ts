@@ -12,10 +12,12 @@ export async function GET() {
       );
     }
 
-    // Cache por 1 hora
+    // Sem cache - dados sempre atualizados
     return NextResponse.json(stats, {
       headers: {
-        "Cache-Control": "public, max-age=3600, stale-while-revalidate=1800",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
       },
     });
   } catch (error) {
