@@ -51,10 +51,6 @@ export class WakaTimeService {
   static async getUser(): Promise<WakaTimeUser | null> {
     try {
       const apiKey = process.env.WAKATIME_API_KEY;
-      console.log(
-        "WakaTime API Key:",
-        apiKey ? `${apiKey.substring(0, 10)}...` : "NOT FOUND"
-      );
 
       const response = await fetch(`${this.BASE_URL}/users/current?timestamp=${Date.now()}`, {
         headers: {
@@ -69,7 +65,6 @@ export class WakaTimeService {
         cache: "no-store",
       });
 
-      console.log("WakaTime User API Response Status:", response.status);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -83,7 +78,6 @@ export class WakaTimeService {
       }
 
       const data: WakaTimeUserResponse = await response.json();
-      console.log("WakaTime User API Response:", data);
       return data.data;
     } catch (error) {
       console.error("Error fetching WakaTime user:", error);
@@ -111,7 +105,6 @@ export class WakaTimeService {
         return null;
       }
 
-      console.log("WakaTime API Key:", `${apiKey.substring(0, 10)}...`);
 
       const response = await fetch(
         `${this.BASE_URL}/users/current/stats/all_time?timestamp=${Date.now()}`,
@@ -127,7 +120,6 @@ export class WakaTimeService {
         }
       );
 
-      console.log("WakaTime API Response Status:", response.status);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -141,7 +133,6 @@ export class WakaTimeService {
       }
 
       const data: WakaTimeResponse = await response.json();
-      console.log("WakaTime API Response:", data);
 
       // Verificar se os dados estão disponíveis
       if (data.data && data.data.total_seconds !== undefined) {
@@ -150,7 +141,6 @@ export class WakaTimeService {
 
       // Se está com status pending_update, retornar dados indicando que está calculando
       if (data.status === "pending_update" && data.human_readable_range) {
-        console.log("WakaTime stats are still calculating...");
         return {
           total_seconds: 0,
           human_readable_total: "Calculating...",
@@ -159,7 +149,6 @@ export class WakaTimeService {
         };
       }
 
-      console.log("WakaTime data not available yet");
       return null;
     } catch (error) {
       console.error("Error fetching WakaTime stats:", error);

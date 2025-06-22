@@ -13,16 +13,7 @@ export async function GET(request: NextRequest) {
       process.env.GITHUB_USERNAME ||
       "adamsnows";
 
-    // Debug logs for production
-    console.log("🔍 GitHub API Debug:", {
-      hasToken: !!process.env.GITHUB_TOKEN,
-      tokenLength: process.env.GITHUB_TOKEN?.length || 0,
-      tokenPrefix: process.env.GITHUB_TOKEN?.substring(0, 7) || 'none',
-      username,
-      envUsername: process.env.GITHUB_USERNAME,
-      environment: process.env.NODE_ENV || 'unknown',
-      vercelEnv: process.env.VERCEL_ENV || 'not-vercel',
-    });
+
 
     // Buscar dados de contribuições
     const contributionsData = await fetchGithubContributions(username);
@@ -76,24 +67,12 @@ async function fetchGithubContributions(username: string) {
       }),
     });
 
-    console.log("🔍 GraphQL Response:", {
-      status: graphqlResponse.status,
-      statusText: graphqlResponse.statusText,
-      hasToken: !!process.env.GITHUB_TOKEN,
-      contentType: graphqlResponse.headers.get('content-type'),
-    });
+
 
     if (graphqlResponse.ok) {
       const graphqlData = await graphqlResponse.json();
 
-      console.log("✅ GraphQL Success:", {
-        hasData: !!graphqlData.data,
-        hasUser: !!graphqlData.data?.user,
-        hasContributions: !!graphqlData.data?.user?.contributionsCollection,
-        totalContributions: graphqlData.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions,
-        hasErrors: !!graphqlData.errors,
-        errors: graphqlData.errors,
-      });
+
 
       // Verificar se temos dados válidos
       if (
