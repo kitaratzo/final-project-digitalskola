@@ -16,15 +16,23 @@ const WakaTimeStats = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        // Usar múltiplos parâmetros para garantir que nunca haja cache
         const timestamp = new Date().getTime();
-        const response = await fetch(`/api/wakatime?_=${timestamp}`, {
-          headers: {
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-          cache: "no-store",
-        });
+        const randomId = Math.random().toString(36).substring(7);
+        const response = await fetch(
+          `/api/wakatime?_=${timestamp}&r=${randomId}&nocache=true`,
+          {
+            method: "GET",
+            headers: {
+              "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
+              Pragma: "no-cache",
+              Expires: "0",
+              "If-None-Match": "*",
+              "If-Modified-Since": "0",
+            },
+            cache: "no-store",
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch stats");

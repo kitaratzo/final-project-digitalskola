@@ -34,25 +34,36 @@ const WakaTimeStats = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Buscar tanto stats quanto user data sem cache
+        // Buscar tanto stats quanto user data sem cache - sempre em tempo real
         const timestamp = new Date().getTime();
+        const randomId = Math.random().toString(36).substring(7);
         const [statsResponse, userResponse] = await Promise.all([
-          fetch(`/api/wakatime?_=${timestamp}`, {
+          fetch(`/api/wakatime?_=${timestamp}&r=${randomId}&nocache=true`, {
+            method: "GET",
             headers: {
-              "Cache-Control": "no-cache, no-store, must-revalidate",
+              "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
               Pragma: "no-cache",
               Expires: "0",
+              "If-None-Match": "*",
+              "If-Modified-Since": "0",
             },
             cache: "no-store",
           }),
-          fetch(`/api/wakatime-user?_=${timestamp}`, {
-            headers: {
-              "Cache-Control": "no-cache, no-store, must-revalidate",
-              Pragma: "no-cache",
-              Expires: "0",
-            },
-            cache: "no-store",
-          }),
+          fetch(
+            `/api/wakatime-user?_=${timestamp}&r=${randomId}&nocache=true`,
+            {
+              method: "GET",
+              headers: {
+                "Cache-Control":
+                  "no-cache, no-store, must-revalidate, max-age=0",
+                Pragma: "no-cache",
+                Expires: "0",
+                "If-None-Match": "*",
+                "If-Modified-Since": "0",
+              },
+              cache: "no-store",
+            }
+          ),
         ]);
 
         const stats = statsResponse.ok ? await statsResponse.json() : null;

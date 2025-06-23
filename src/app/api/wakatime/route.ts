@@ -12,12 +12,16 @@ export async function GET() {
       );
     }
 
-    // Sem cache - dados sempre atualizados
+    // Sem cache - dados sempre atualizados em tempo real
     return NextResponse.json(stats, {
       headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0",
+        "Cache-Control":
+          "no-cache, no-store, must-revalidate, max-age=0, s-maxage=0",
+        Pragma: "no-cache",
+        Expires: "0",
+        "Last-Modified": new Date().toUTCString(),
+        ETag: `"${Date.now()}-${Math.random()}"`,
+        Vary: "*",
       },
     });
   } catch (error) {

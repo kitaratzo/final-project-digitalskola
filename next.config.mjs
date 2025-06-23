@@ -5,7 +5,7 @@ const nextConfig = {
   poweredByHeader: false,
   experimental: {
     optimizeCss: false,
-    esmExternals: 'loose',
+    esmExternals: "loose",
   },
   images: {
     remotePatterns: [
@@ -48,11 +48,11 @@ const nextConfig = {
     ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 300, 384],
-    formats: ['image/webp'],
+    formats: ["image/webp"],
     minimumCacheTTL: 60,
     disableStaticImages: false,
     dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
+    contentDispositionType: "attachment",
     unoptimized: true,
   },
   async headers() {
@@ -63,6 +63,28 @@ const nextConfig = {
           {
             key: "X-Robots-Tag",
             value: "index, follow",
+          },
+        ],
+      },
+      // Headers específicos para WakaTime - nunca cachear
+      {
+        source: "/api/wakatime/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-cache, no-store, must-revalidate, max-age=0, s-maxage=0",
+          },
+          {
+            key: "Pragma",
+            value: "no-cache",
+          },
+          {
+            key: "Expires",
+            value: "0",
+          },
+          {
+            key: "Vary",
+            value: "*",
           },
         ],
       },

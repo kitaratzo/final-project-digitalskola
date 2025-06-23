@@ -16,10 +16,16 @@ export default async function handler(
       return res.status(500).json({ error: "Failed to fetch WakaTime user" });
     }
 
-    // Sem cache - dados sempre atualizados
-    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    // Sem cache - dados sempre atualizados em tempo real
+    res.setHeader(
+      "Cache-Control",
+      "no-cache, no-store, must-revalidate, max-age=0, s-maxage=0"
+    );
     res.setHeader("Pragma", "no-cache");
     res.setHeader("Expires", "0");
+    res.setHeader("Last-Modified", new Date().toUTCString());
+    res.setHeader("ETag", `"${Date.now()}-${Math.random()}"`);
+    res.setHeader("Vary", "*");
 
     return res.status(200).json(user);
   } catch (error) {
