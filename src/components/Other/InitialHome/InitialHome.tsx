@@ -1,49 +1,49 @@
-import { motion } from "framer-motion";
-import gsap from "gsap";
-import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from 'framer-motion';
+import gsap from 'gsap';
+import Link from 'next/link';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   RiAddLine,
   RiArrowDownSLine,
   RiCloseLine,
   RiDownloadFill,
   RiMailSendFill,
-} from "react-icons/ri";
+} from 'react-icons/ri';
 
-import { highlightTechArray } from "./syntax-highlighter";
+import { highlightTechArray } from './syntax-highlighter';
 
 const techStackData = [
-  { name: "React", category: "frontend", featured: true },
-  { name: "Next.js", category: "frontend", featured: true },
-  { name: "TypeScript", category: "language", featured: true },
-  { name: "Node.js", category: "backend", featured: true },
-  { name: "Git", category: "tools", featured: false },
-  { name: "GitHub", category: "tools", featured: false },
-  { name: "GitLab", category: "tools", featured: false },
-  { name: "Python", category: "language", featured: true },
-  { name: "GraphQL", category: "backend", featured: false },
-  { name: "Tailwind", category: "frontend", featured: false },
-  { name: "Sass", category: "frontend", featured: false },
-  { name: "FastAPI", category: "backend", featured: false },
-  { name: "Django", category: "backend", featured: false },
-  { name: "Express", category: "backend", featured: false },
-  { name: "NestJS", category: "backend", featured: false },
-  { name: "Vue", category: "frontend", featured: false },
-  { name: "Docker", category: "devops", featured: false },
-  { name: "Figma", category: "design", featured: false },
-  { name: "Jest", category: "testing", featured: false },
-  { name: "Linux", category: "os", featured: false },
-  { name: "Postman", category: "tools", featured: false },
-  { name: "Insomnia", category: "tools", featured: false },
-  { name: "Figma", category: "tools", featured: false },
-  { name: "Vercel", category: "hosting", featured: false },
-  { name: "Vite", category: "frontend", featured: false },
-  { name: "Bootstrap", category: "frontend", featured: false },
-  { name: "MongoDB", category: "database", featured: false },
-  { name: "PostgreSQL", category: "database", featured: false },
-  { name: "AWS", category: "cloud", featured: false },
-  { name: "GCP", category: "cloud", featured: false },
-  { name: "GitHub Actions", category: "ci-cd", featured: false },
+  { name: 'React', category: 'frontend', featured: true },
+  { name: 'Next.js', category: 'frontend', featured: true },
+  { name: 'TypeScript', category: 'language', featured: true },
+  { name: 'Node.js', category: 'backend', featured: true },
+  { name: 'Git', category: 'tools', featured: false },
+  { name: 'GitHub', category: 'tools', featured: false },
+  { name: 'GitLab', category: 'tools', featured: false },
+  { name: 'Python', category: 'language', featured: true },
+  { name: 'GraphQL', category: 'backend', featured: false },
+  { name: 'Tailwind', category: 'frontend', featured: false },
+  { name: 'Sass', category: 'frontend', featured: false },
+  { name: 'FastAPI', category: 'backend', featured: false },
+  { name: 'Django', category: 'backend', featured: false },
+  { name: 'Express', category: 'backend', featured: false },
+  { name: 'NestJS', category: 'backend', featured: false },
+  { name: 'Vue', category: 'frontend', featured: false },
+  { name: 'Docker', category: 'devops', featured: false },
+  { name: 'Figma', category: 'design', featured: false },
+  { name: 'Jest', category: 'testing', featured: false },
+  { name: 'Linux', category: 'os', featured: false },
+  { name: 'Postman', category: 'tools', featured: false },
+  { name: 'Insomnia', category: 'tools', featured: false },
+  { name: 'Figma', category: 'tools', featured: false },
+  { name: 'Vercel', category: 'hosting', featured: false },
+  { name: 'Vite', category: 'frontend', featured: false },
+  { name: 'Bootstrap', category: 'frontend', featured: false },
+  { name: 'MongoDB', category: 'database', featured: false },
+  { name: 'PostgreSQL', category: 'database', featured: false },
+  { name: 'AWS', category: 'cloud', featured: false },
+  { name: 'GCP', category: 'cloud', featured: false },
+  { name: 'GitHub Actions', category: 'ci-cd', featured: false },
 ];
 
 import {
@@ -52,14 +52,14 @@ import {
   fadeInRight,
   fadeInUp,
   staggerContainer,
-} from "@/components/Animations/AdvancedTransition";
-import ClientOnly from "@/components/Animations/ClientOnly";
-import FloatingElement from "@/components/Animations/FloatingElement";
-import DevImg from "@/components/Other/DevImg/DevImg";
-import { StackIcon } from "@/components/Other/ProfessionalBadge/Icons";
-import ProfessionalBadge from "@/components/Other/ProfessionalBadge/ProfessionalBadge";
-import Socials from "@/components/Other/Socials/Socials";
-import { Button } from "@/components/Other/UI/button";
+} from '@/components/Animations/AdvancedTransition';
+import ClientOnly from '@/components/Animations/ClientOnly';
+import FloatingElement from '@/components/Animations/FloatingElement';
+import DevImg from '@/components/Other/DevImg/DevImg';
+import { StackIcon } from '@/components/Other/ProfessionalBadge/Icons';
+import ProfessionalBadge from '@/components/Other/ProfessionalBadge/ProfessionalBadge';
+import Socials from '@/components/Other/Socials/Socials';
+import { Button } from '@/components/Other/UI/button';
 
 const InitialHome = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -69,14 +69,14 @@ const InitialHome = () => {
 
   useEffect(() => {
     if (titleRef.current) {
-      const letters = titleRef.current.textContent?.split("") || [];
-      titleRef.current.innerHTML = "";
+      const letters = titleRef.current.textContent?.split('') || [];
+      titleRef.current.innerHTML = '';
 
       letters.forEach((letter) => {
-        const span = document.createElement("span");
+        const span = document.createElement('span');
         span.textContent = letter;
-        span.style.opacity = "0";
-        span.style.display = "inline-block";
+        span.style.opacity = '0';
+        span.style.display = 'inline-block';
         titleRef.current?.appendChild(span);
       });
 
@@ -85,7 +85,7 @@ const InitialHome = () => {
         stagger: 0.1,
         duration: 0.5,
         y: 0,
-        ease: "power2.out",
+        ease: 'power2.out',
         delay: 0.5,
       });
     }
@@ -106,7 +106,7 @@ const InitialHome = () => {
       devOps: [
         ...(techByCategory.devops || []),
         ...(techByCategory.cloud || []),
-        ...(techByCategory["ci-cd"] || []),
+        ...(techByCategory['ci-cd'] || []),
       ],
       tools: techByCategory.tools || [],
     };
@@ -116,19 +116,19 @@ const InitialHome = () => {
   <span style="color:#9CDCFE">name</span>: <span style="color:#CE9178">'Adam Neves'</span>,
   <span style="color:#9CDCFE">skills</span>: {
     <span style="color:#9CDCFE">frontend</span>: ${highlightTechArray(
-      skillsObject.frontend
+      skillsObject.frontend,
     )},
     <span style="color:#9CDCFE">backend</span>: ${highlightTechArray(
-      skillsObject.backend
+      skillsObject.backend,
     )},
     <span style="color:#9CDCFE">database</span>: ${highlightTechArray(
-      skillsObject.database
+      skillsObject.database,
     )},
     <span style="color:#9CDCFE">devOps</span>: ${highlightTechArray(
-      skillsObject.devOps
+      skillsObject.devOps,
     )},
     <span style="color:#9CDCFE">tools</span>: ${highlightTechArray(
-      skillsObject.tools
+      skillsObject.tools,
     )}
   },
   <span style="color:#9CDCFE">createSolution</span>: (<span style="color:#4FC1FF">problem</span>) <span style="color:#569CD6">=></span> {
@@ -140,14 +140,14 @@ const InitialHome = () => {
   // Simple and reliable animation initialization
   useEffect(() => {
     // Only run on client and once
-    if (typeof window === "undefined" || animationInitializedRef.current)
+    if (typeof window === 'undefined' || animationInitializedRef.current)
       return;
 
     // Add minimal required styles
     const addStyles = () => {
-      const styleId = "code-animation-styles";
+      const styleId = 'code-animation-styles';
       if (!document.getElementById(styleId)) {
-        const style = document.createElement("style");
+        const style = document.createElement('style');
         style.id = styleId;
         style.textContent = `
           .code-block {
@@ -169,33 +169,33 @@ const InitialHome = () => {
             {},
             {
               duration: 6,
-              ease: "power1.inOut",
+              ease: 'power1.inOut',
               onUpdate: function (this: { progress: () => number }) {
                 // Simple fallback in case setupCodeTypingAnimation fails
                 try {
                   // Manually implement the typing animation to avoid issues
                   if (codeBlockRef.current) {
                     const progress = this.progress();
-                    const textLength = codeText.replace(/<[^>]*>/g, "").length;
+                    const textLength = codeText.replace(/<[^>]*>/g, '').length;
                     const currentLength = Math.floor(progress * textLength);
 
                     // Create simplified typing effect
                     let plainTextCount = 0;
-                    let displayHTML = "";
+                    let displayHTML = '';
                     let inTag = false;
-                    let currentTag = "";
+                    let currentTag = '';
 
                     for (let i = 0; i < codeText.length; i++) {
                       const char = codeText[i];
 
-                      if (char === "<") {
+                      if (char === '<') {
                         inTag = true;
                         currentTag += char;
-                      } else if (char === ">") {
+                      } else if (char === '>') {
                         inTag = false;
                         currentTag += char;
                         displayHTML += currentTag;
-                        currentTag = "";
+                        currentTag = '';
                       } else if (inTag) {
                         currentTag += char;
                       } else {
@@ -211,7 +211,7 @@ const InitialHome = () => {
                     codeBlockRef.current.innerHTML = displayHTML;
                   }
                 } catch (err) {
-                  console.warn("Animation step error, using fallback:", err);
+                  console.warn('Animation step error, using fallback:', err);
                   if (codeBlockRef.current && !codeBlockRef.current.innerHTML) {
                     codeBlockRef.current.innerHTML = codeText;
                   }
@@ -223,13 +223,13 @@ const InitialHome = () => {
                   codeBlockRef.current.innerHTML = codeText;
                 }
               },
-            }
+            },
           );
 
           // Mark as initialized to prevent re-runs
           animationInitializedRef.current = true;
         } catch (error) {
-          console.error("Animation error:", error);
+          console.error('Animation error:', error);
 
           // Simple fallback if animation fails
           if (codeBlockRef.current) {
@@ -246,7 +246,7 @@ const InitialHome = () => {
 
   useEffect(() => {
     if (techStackExpanded) {
-      const badges = document.querySelectorAll(".tech-badge");
+      const badges = document.querySelectorAll('.tech-badge');
       gsap.fromTo(
         badges,
         { opacity: 0, y: 10 },
@@ -254,9 +254,9 @@ const InitialHome = () => {
           opacity: 1,
           y: 0,
           stagger: 0.03,
-          ease: "power2.out",
+          ease: 'power2.out',
           duration: 0.4,
-        }
+        },
       );
     }
   }, [techStackExpanded]);
@@ -304,10 +304,10 @@ const InitialHome = () => {
               variants={fadeInDown}
               className="max-w-[500px] mx-auto xl:mx-0 text-sm mb-5 leading-relaxed text-justify"
             >
-              <span className="text-primary font-semibold">FullStack</span>{" "}
+              <span className="text-primary font-semibold">FullStack</span>{' '}
               development with a pronounced focus and enthusiasm for creating
-              powerful and innovative solutions. My experience covers both{" "}
-              <span className="text-primary font-semibold">front-end</span> and{" "}
+              powerful and innovative solutions. My experience covers both{' '}
+              <span className="text-primary font-semibold">front-end</span> and{' '}
               <span className="text-primary font-semibold">back-end</span>,
               allowing me to build complete and integrated applications. I am
               constantly looking for new challenges that allow me to learn and
@@ -322,7 +322,7 @@ const InitialHome = () => {
             >
               <Link href="/contact" aria-label="contact">
                 <Button className="gap-x-2 group">
-                  Contact me{" "}
+                  Contact me{' '}
                   <RiMailSendFill
                     size={18}
                     className="transition-transform group-hover:translate-x-1"
@@ -331,7 +331,7 @@ const InitialHome = () => {
               </Link>
               <Link
                 target="_blank"
-                href="https://drive.google.com/file/d/10LMqFmLmz2q8Omr9LGabpklu_DfDpCJU/view?usp=sharing"
+                href="https://drive.google.com/file/d/1-Fc_jtaHOwTODyT30z70gX7ZqK5n94vP/view?usp=sharing"
                 aria-label="cv"
               >
                 <Button variant="secondary" className="gap-x-2 group">
@@ -363,8 +363,8 @@ const InitialHome = () => {
               <div
                 className={`flex flex-wrap gap-x-3 gap-y-2 transition-all duration-500 ease-in-out ${
                   techStackExpanded
-                    ? "max-h-[500px] opacity-100 transform-gpu"
-                    : "max-h-[38px] overflow-hidden"
+                    ? 'max-h-[500px] opacity-100 transform-gpu'
+                    : 'max-h-[38px] overflow-hidden'
                 }`}
               >
                 {techStackData
@@ -385,7 +385,7 @@ const InitialHome = () => {
                     aria-label="Show more technologies"
                   >
                     <span>
-                      +{techStackData.filter((tech) => !tech.featured).length}{" "}
+                      +{techStackData.filter((tech) => !tech.featured).length}{' '}
                       mais
                     </span>
                     <RiAddLine className="text-xs" />
@@ -490,7 +490,7 @@ const InitialHome = () => {
                     <pre
                       ref={codeBlockRef}
                       className="text-xs text-white font-mono overflow-x-auto whitespace-pre-wrap h-full w-full"
-                      style={{ willChange: "contents" }}
+                      style={{ willChange: 'contents' }}
                     ></pre>
                   </div>
                 </ClientOnly>
@@ -509,7 +509,7 @@ const InitialHome = () => {
             onClick={() =>
               window.scrollTo({
                 top: window.innerHeight,
-                behavior: "smooth",
+                behavior: 'smooth',
               })
             }
           />
