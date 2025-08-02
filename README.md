@@ -1,6 +1,14 @@
 # Final Project - Developer Portfolio
 
 Ini adalah proyek akhir yang dibuat untuk kebutuhan bootcamp cloud engineer, menampilkan personal developer portfolio yang dibangun dengan React (Next.js), serta di-deploy ke AWS menggunakan CI/CD, containerization, dan monitoring yang lengkap.
+## 🚀 Konfigurasi AWS
+
+- Route 53
+- Application Load Balancing
+- Target Group
+- Auto Scaling Group
+- EC2 Instance
+- Security Group
 
 ## 🌐 Live Demo
 
@@ -111,6 +119,5 @@ Terdapat 2 dashboard utama di Grafana:
 - Email: chandra.insan@gmail.com
 - GitHub: [@kitaratzo](https://github.com/kitaratzo)
 
-## 📄 Lisensi
-
-MIT License © 2025 Chandra Insan Prasetyo
+## 📄 Thanks to
+[Adam Neves](https://github.com/adamsnows)
