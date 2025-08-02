@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
 COPY . .
-RUN npm run build
+RUN npm run build && ls -la build/
 
 # Production stage
 FROM nginx:alpine
