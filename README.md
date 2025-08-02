@@ -8,6 +8,7 @@ Ini adalah proyek akhir yang dibuat untuk kebutuhan bootcamp cloud engineer, men
 - Target Group
 - Auto Scaling Group
 - EC2 Instance
+- Key Pem
 - Security Group
 
 ## 🌐 Live Demo
