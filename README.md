@@ -1,5 +1,6 @@
 <h1 align="center">
-   Final Project: Cloud Full-Stack Deployment 
+   Final Project: Cloud Full-Stack Deployment
+   Chandra Insan Prasetyo
 </h1>
 
 ---
