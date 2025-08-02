@@ -6,6 +6,7 @@ const HomePage = () => {
     <>
       <Seo
         title="Digital Skola"
+        description="Portfolio Chandra – bootcamp cloud engineer Digital Skola"
       />
       <Home />
     </>
