@@ -1,173 +1,116 @@
-<h1 align="center">
-   <span>Final Project: Cloud Full-Stack Deployment</a>
-   <span>Chandra Insan Prasetyo</a>
-</h1>
+# Final Project - Developer Portfolio
 
----
+Ini adalah proyek akhir yang dibuat untuk kebutuhan bootcamp cloud engineer, menampilkan personal developer portfolio yang dibangun dengan React (Next.js), serta di-deploy ke AWS menggunakan CI/CD, containerization, dan monitoring yang lengkap.
 
-# Documentation in English
+## 🌐 Live Demo
 
-This is a professional portfolio developed with modern technologies to showcase my skills, projects, and experience as a full stack developer. The website features an interactive interface with fluid animations, dynamic code display, and responsive design.
+> 🔗 [https://chandra-insan.site](https://chandra-insan.site)
 
-## Key Features
+## 📦 Repository
 
-- **Responsive Design**: Adapted for all devices, from smartphones to desktops
-- **Interactive Animations**: Using GSAP and Framer Motion for transitions and visual effects
-- **Dynamic Code Display**: Code visualization with syntax highlighting and typing effect
-- **Featured Technologies**: Display of mastered technologies with category filtering
-- **Reviews**: Section showing feedback from clients and colleagues
-- **Contact Form**: Integration for direct communication
+> 🔗 [https://github.com/kitaratzo/final-project-digitalskola](https://github.com/kitaratzo/final-project-digitalskola)
 
-## Technologies Used
+## 🚀 Teknologi yang Digunakan
 
-- **Next.js**: React framework with server-side rendering
-- **TypeScript**: Static typing for safer and more maintainable code
-- **Tailwind CSS**: Rapid and responsive styling with utility classes
-- **GSAP**: Advanced animation library for visual effects
-- **Framer Motion**: React component animations
-- **React Icons**: Icon set for modern interfaces
-- **ClientOnly**: Component for exclusive client-side rendering (hydration issue resolution)
+- **Frontend**: Next.js (React)
+- **Styling**: Tailwind CSS
+- **Containerization**: Docker
+- **CI/CD**: GitHub Actions
+- **Infrastructure**: AWS EC2, ALB, Auto Scaling Group
+- **Monitoring**: Prometheus, Grafana, cAdvisor
+- **Log Monitoring**: Loki + Promtail
+- **Domain**: Route 53 (chandra-insan.site)
 
-## Available Routes
+## 📁 Struktur Proyek
 
-- **/** : Home page with introduction and skills demonstration
-- **/projects**: Portfolio of completed projects
-- **/contact**: Contact form and connection information
-
-## Setup and Configuration
-
-### Configuring GitHub Integration
-
-To display your GitHub projects and contribution charts, configure the following environment variables:
-
-1. **Create a GitHub Token (required to avoid rate limiting)**:
-   - Go to [GitHub Settings > Tokens](https://github.com/settings/tokens)
-   - Click "Generate new token" → "Generate new token (classic)"
-   - Give it a name like "Portfolio Projects API"
-   - Select only these permissions: `public_repo` and `read:user`
-   - Click "Generate token" and copy the generated value
-
-2. **Configure environment variables**:
-   ```bash
-   # Copy the example file
-   cp .env.example .env.local
-
-   # Edit .env.local with your information:
-   GITHUB_TOKEN=your_token_here
-   NEXT_PUBLIC_GITHUB_USERNAME=your_github_username
-   NEXT_PUBLIC_PORTFOLIO_TAG=portfolio-project
-   ```
-
-3. **Tag projects for portfolio display**:
-   - Go to the repositories you want to showcase
-   - Go to "Settings" → "General" → "Topics"
-   - Add the tag `portfolio-project` (or the tag configured in `NEXT_PUBLIC_PORTFOLIO_TAG`)
-
-### Configuring Dev.to Integration
-
-To display your Dev.to articles, just configure your username:
-
-```bash
-# In .env.local file, add or edit:
-NEXT_PUBLIC_DEVTO_USERNAME=your_devto_username
+```
+.
+├── app/                 # Folder utama halaman (Next.js App Router)
+├── components/          # Komponen UI
+├── public/              # Asset statis
+├── styles/              # Styling global (Tailwind)
+├── Dockerfile           # Konfigurasi Docker build
+├── prometheus.yml       # Konfigurasi monitoring Prometheus
+├── .github/workflows/   # CI/CD GitHub Actions
+└── README.md            # Dokumentasi ini
 ```
 
-If not configured, the system will use "adamsnows" as default.
+## ⚙️ Cara Menjalankan di Lokal
 
-### GitHub Project Tags Structure
+### 1. Clone Repo
 
-The system automatically categorizes your projects based on tags:
-- `backend` or `back-end` → **Back end**
-- `frontend` or `front-end` → **Front end**
-- `fullstack` or `full-stack` → **Full stack**
-- `mobile` → **Mobile**
-- `devops` → **DevOps**
+```bash
+git clone https://github.com/kitaratzo/final-project-digitalskola.git
+cd final-project-digitalskola
+```
 
-### GitHub Charts and Contributions
+### 2. Install Dependencies
 
-The contribution chart is automatically loaded using the username configured in `NEXT_PUBLIC_GITHUB_USERNAME`. It shows:
-- Contributions from the last 365 days
-- Total commit statistics
-- Interactive contribution calendar visualization
+```bash
+npm install
+```
 
-## Installation
+### 3. Jalankan di Lokal
 
-To run this project locally, follow these instructions:
+```bash
+npm run dev
+```
 
-1. Clone the repository:
+Akses: [http://localhost:3000](http://localhost:3000)
 
-   ```bash
-   git clone https://github.com/yourusername/dev-portfolio.git
-   ```
+## 🐳 Docker
 
-2. Navigate to the project directory:
+### Build Docker Image
 
-   ```bash
-   cd dev-portfolio
-   ```
+```bash
+docker build -t kitaratzo/final-project-portfolio:latest .
+```
 
-3. Install dependencies:
+### Run Container
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+```bash
+docker run -d -p 80:3000 --name app --restart always kitaratzo/final-project-portfolio:latest
+```
 
-4. Configure environment variables:
+## 🔁 CI/CD Pipeline
 
-   ```bash
-   cp .env.example .env.local
-   # Edit .env.local file with your configurations
-   ```
+Setiap push ke branch `main` akan:
+1. Build Docker image
+2. Push ke Docker Hub
+3. SSH ke EC2
+4. Pull image dan restart container
 
-5. Start the development server:
+File workflow:
+```bash
+.github/workflows/deploy.yml
+```
 
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+## 📈 Monitoring
 
-6. Access the application in your browser:
+| Tool        | Fungsi                                |
+|-------------|----------------------------------------|
+| Prometheus  | Monitoring metrics dari container      |
+| cAdvisor    | Resource usage untuk container Docker  |
+| Grafana     | Visualisasi monitoring & logs          |
+| Loki        | Penyimpanan dan pencarian log          |
+| Promtail    | Pengumpul log dari container           |
 
-   ```
-   http://localhost:3000/
-   ```
+URL:
+- 🔎 Grafana: [http://monitoring.chandra-insan.site](http://monitoring.chandra-insan.site)
 
-## Deployment and CI/CD
+## 🧪 Dashboard
 
-This project is configured with automated CI/CD using GitHub Actions for deployment to Vercel:
+Terdapat 2 dashboard utama di Grafana:
 
-1. Every push to the `main` or `master` branch triggers a production deployment
-2. Every pull request generates a preview deployment
+1. **Resource Monitoring (CPU, RAM, Container Health)**
+2. **Log Viewer (Loki Promtail)** – memantau error log, status runtime, dsb.
 
-For detailed information on the CI/CD setup, see [CI/CD README](./.github/CI_CD_README.md).
+## 👨‍💻 Kontributor
 
-## Technical Solutions Implemented
+- Nama: **Chandra Insan Prasetyo**
+- Email: chandra.insan@gmail.com
+- GitHub: [@kitaratzo](https://github.com/kitaratzo)
 
-- **Hydration Error Prevention**: Use of ClientOnly components to ensure compatibility between server and client rendering
-- **Dynamic Code Animation**: Robust system for code animation with retry and fallback mechanisms
-- **Reusable Components**: Modular structure for efficient maintenance
-- **Image Optimization**: Use of Next.js image optimization system
-- **Automated CI/CD**: GitHub Actions workflow for automated deployment to Vercel
-- **Dependency Management**: Custom configuration to handle complex library dependencies
-- **GitHub API Integration**: Caching system to optimize GitHub API requests
-- **Dev.to API Integration**: Automatic loading of published articles
-- **Contribution Charts**: Interactive visualization of GitHub contributions
+## 📄 Lisensi
 
-## Contribution
-
-Suggestions and contributions are welcome! Feel free to open a PR or report issues.
-
-## License
-
-This project is under the [MIT License](https://opensource.org/licenses/MIT).
-
----
-
-<div align="center">
-   <span>Many Thanks to</a>
-   <span>Developed by </span><a href="https://github.com/adamsnows">Adam Neves</a><br/>
-   <span>Based on the original template by </span><a href="https://github.com/vagnermengali/developer-blue-portfolio">Vagner Mengali</a>
-</div>
+MIT License © 2025 Chandra Insan Prasetyo
